@@ -1,0 +1,10 @@
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\bin\Debug\ComputerModelMachine.exe.config
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\bin\Debug\ComputerModelMachine.exe
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\bin\Debug\ComputerModelMachine.pdb
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.csprojAssemblyReference.cache
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.Form1.resources
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.Properties.Resources.resources
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.csproj.GenerateResource.cache
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.csproj.CoreCompileInputs.cache
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.exe
+E:\learn\计算机原理课设\ComputerModelMachine\ComputerModelMachine\obj\Debug\ComputerModelMachine.pdb

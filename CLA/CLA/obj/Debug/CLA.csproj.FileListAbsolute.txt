@@ -1,0 +1,10 @@
+E:\learn\计算机原理课设\CLA\CLA\bin\Debug\CLA.exe.config
+E:\learn\计算机原理课设\CLA\CLA\bin\Debug\CLA.exe
+E:\learn\计算机原理课设\CLA\CLA\bin\Debug\CLA.pdb
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.csprojAssemblyReference.cache
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.Form1.resources
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.Properties.Resources.resources
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.csproj.GenerateResource.cache
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.csproj.CoreCompileInputs.cache
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.exe
+E:\learn\计算机原理课设\CLA\CLA\obj\Debug\CLA.pdb
