@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.GBRegister = new System.Windows.Forms.GroupBox();
             this.Textbox_R7 = new System.Windows.Forms.TextBox();
             this.Textbox_R6 = new System.Windows.Forms.TextBox();
@@ -71,13 +70,13 @@
             this.Listbox_Code = new System.Windows.Forms.ListBox();
             this.GB_CMU = new System.Windows.Forms.GroupBox();
             this.Listview_ControlMemory = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader_Address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader_Info = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Reset = new System.Windows.Forms.Button();
             this.btn_InputFile = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.GB_DMU = new System.Windows.Forms.GroupBox();
             this.Listview_DataMemory = new System.Windows.Forms.ListView();
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.GB_MicroOrder = new System.Windows.Forms.GroupBox();
             this.Listbox_MicroOrder = new System.Windows.Forms.ListBox();
             this.btn_Start = new System.Windows.Forms.Button();
@@ -595,15 +594,27 @@
             // Listview_ControlMemory
             // 
             this.Listview_ControlMemory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.columnHeader_Address,
+            this.columnHeader_Info});
             this.Listview_ControlMemory.FullRowSelect = true;
             this.Listview_ControlMemory.GridLines = true;
             this.Listview_ControlMemory.HideSelection = false;
             this.Listview_ControlMemory.Location = new System.Drawing.Point(8, 18);
             this.Listview_ControlMemory.Name = "Listview_ControlMemory";
-            this.Listview_ControlMemory.Size = new System.Drawing.Size(413, 406);
+            this.Listview_ControlMemory.Size = new System.Drawing.Size(410, 406);
             this.Listview_ControlMemory.TabIndex = 0;
             this.Listview_ControlMemory.UseCompatibleStateImageBehavior = false;
+            this.Listview_ControlMemory.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader_Address
+            // 
+            this.columnHeader_Address.Text = "CMA";
+            this.columnHeader_Address.Width = 45;
+            // 
+            // columnHeader_Info
+            // 
+            this.columnHeader_Info.Text = "Data";
+            this.columnHeader_Info.Width = 364;
             // 
             // btn_Reset
             // 
@@ -649,12 +660,7 @@
             // 
             // Listview_DataMemory
             // 
-            this.Listview_DataMemory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader2});
-            listViewGroup1.Header = "ListViewGroup";
-            listViewGroup1.Name = "listViewGroup1";
-            this.Listview_DataMemory.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1});
+            this.Listview_DataMemory.GridLines = true;
             this.Listview_DataMemory.HideSelection = false;
             this.Listview_DataMemory.Location = new System.Drawing.Point(6, 18);
             this.Listview_DataMemory.Name = "Listview_DataMemory";
@@ -691,6 +697,7 @@
             this.btn_Start.TabIndex = 25;
             this.btn_Start.Text = "开始执行";
             this.btn_Start.UseVisualStyleBackColor = true;
+            this.btn_Start.Click += new System.EventHandler(this.btn_Start_Click);
             // 
             // GB_OMU
             // 
@@ -726,7 +733,7 @@
             // ColumnHeader_Code
             // 
             this.ColumnHeader_Code.Text = "IValue";
-            this.ColumnHeader_Code.Width = 190;
+            this.ColumnHeader_Code.Width = 125;
             // 
             // GB_MC
             // 
@@ -843,10 +850,8 @@
         private System.Windows.Forms.Button btn_InputFile;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListView Listview_ControlMemory;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.GroupBox GB_DMU;
         private System.Windows.Forms.ListView Listview_DataMemory;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.GroupBox GB_MicroOrder;
         private System.Windows.Forms.ListBox Listbox_MicroOrder;
         private System.Windows.Forms.Button btn_Start;
@@ -857,6 +862,8 @@
         private System.Windows.Forms.GroupBox GB_MC;
         private System.Windows.Forms.ListBox Listbox_MachineCode;
         private System.Windows.Forms.Button btn_EveyStep;
+        private System.Windows.Forms.ColumnHeader columnHeader_Address;
+        private System.Windows.Forms.ColumnHeader columnHeader_Info;
     }
 }
 

@@ -13,8 +13,9 @@ namespace ComputerModelMachine
 {
     public partial class Form1 : Form
     {
-        short[] R = new short[8];
+        byte[] R = new byte[8];
         short PC, IR, MAR, MDR, IMAR, IMDR, SR, DR;
+        byte[] DataMemory = new byte[32];
         //PSW 含义解释
         //H(半进位标志) S(符号标志位（NV异或值）)
         //V(有符号溢出) C(无符号溢出) 
@@ -29,20 +30,21 @@ namespace ComputerModelMachine
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            //绘制 Listview_DataMemory.Columns
+            Listview_DataMemory.Columns.Add("DAD", 45, HorizontalAlignment.Left);
+            Listview_DataMemory.Columns.Add("DValue", 72, HorizontalAlignment.Left);
+            
+            //TextBox[] textBox_R = new TextBox[] { Textbox_R0, Textbox_R1, Textbox_R2, Textbox_R3, Textbox_R4, Textbox_R5, Textbox_R6, Textbox_R7};
         }
         //初始化  (置零)
         private void btn_Reset_Click(object sender, EventArgs e)
         {
-            InstructCount = 0x1000;
-            ToTextbox(Textbox_R0, R[0], 0);
-            ToTextbox(Textbox_R1, R[1], 0);
-            ToTextbox(Textbox_R2, R[2], 0);
-            ToTextbox(Textbox_R3, R[3], 0);
-            ToTextbox(Textbox_R4, R[4], 0);
-            ToTextbox(Textbox_R5, R[5], 0);
-            ToTextbox(Textbox_R6, R[6], 0);
-            ToTextbox(Textbox_R7, R[7], 0);
+            TextBox[] textBox_R = new TextBox[] { Textbox_R0, Textbox_R1, Textbox_R2, Textbox_R3, Textbox_R4, Textbox_R5, Textbox_R6, Textbox_R7 };
+            for (int i = 0; i < textBox_R.Length; i++)
+                ToTextbox(textBox_R[i], R[i], 0);
+            for (int i = 0; i < DataMemory.Length; i++)
+                DataMemory[i] = 0;
+            AddListview_DM();
             ToTextbox(Textbox_PC, PC, 0);
             ToTextbox(Textbox_IR, IR, 0);
             ToTextbox(Textbox_SR, SR, 0);
@@ -90,7 +92,7 @@ namespace ComputerModelMachine
                     }
                 }
                 fileReader.Close();
-            //}     因测试被注释掉
+            //}     //因测试被注释掉
         }
 
         /**
@@ -101,7 +103,7 @@ namespace ComputerModelMachine
           */
         private void ToTextbox(TextBox textBox, short Register, int num)
         {
-            textBox.Text = Convert.ToString(num, 16).PadLeft(4, '0');
+            textBox.Text = Convert.ToString(num, 16).PadLeft(4, '0').ToUpper();
             Register = Convert.ToInt16(num);
         }
         /**
@@ -147,9 +149,16 @@ namespace ComputerModelMachine
         {
 
         }
+
+        private void btn_Start_Click(object sender, EventArgs e)
+        {
+            InstructCount = 0x1000;
+            ToTextbox(Textbox_PC, PC, InstructCount);
+            ChangeDM(5, 0x1A);
+        }
         /**
-         * 汇编指令转机器码
-         */
+          * 汇编指令转机器码
+          */
         private string AssemblyToCode(string Assembly)
         {
             string[] array = Assembly.Split(new char[] { ' ', ',', '，'});
@@ -267,21 +276,48 @@ namespace ComputerModelMachine
         private void AddListbox_MC(string str)
         {
             string temp = "";
-            for (int i = 0; i < str.Length; i++)
-            {
-                temp += str[i];
-                if ((i + 1) % 4 == 0)
-                    temp += " ";
-            }
-            /*
-             * finally
             for (int i = 0; i < str.Length; i+=4)
             {
                 temp += str.Substring(i, 4);
                 temp += " ";
             }
-            */
             Listbox_MachineCode.Items.Add(temp);
+        }
+        /**
+         * 清除并赋值 Listview_DataMemory
+         * Warning：DataMemory 中值不可为空
+         */
+        private void AddListview_DM()
+        {
+            if(Listview_DataMemory.Columns.Count > 0)
+                Listview_DataMemory.Columns.Clear();
+            if (Listview_DataMemory.Items.Count > 0)
+                Listview_DataMemory.Clear();
+            Listview_DataMemory.Columns.Add("DAD", 45, HorizontalAlignment.Left);
+            Listview_DataMemory.Columns.Add("DValue", 72, HorizontalAlignment.Left);
+            for (int Address = 0; Address < DataMemory.Length; Address++)
+            {
+                ListViewItem lv = new ListViewItem(Convert.ToString(Address, 16).PadLeft(4, '0').ToUpper());
+                lv.SubItems.Add(Convert.ToString(DataMemory[Address], 16).PadLeft(4, '0').ToUpper());
+                Listview_DataMemory.Items.Add(lv);
+            }
+        }
+        private void OP(string MachineCode)
+        {
+
+        }
+        /**
+         * 修改Listview_DataMemory 中某项
+         * @param Address 地址
+         * @param num 目的值
+         */
+        private void ChangeDM(short Address, byte num)
+        {
+            if(Address < 32)
+            {
+                DataMemory[Address] = num;
+                Listview_DataMemory.Items[Address].SubItems[1].Text = Convert.ToString(DataMemory[Address], 16).PadLeft(4, '0').ToUpper();
+            }
         }
     }
 }
