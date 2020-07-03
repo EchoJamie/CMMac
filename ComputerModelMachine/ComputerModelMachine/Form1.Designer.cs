@@ -87,6 +87,8 @@
             this.GB_MC = new System.Windows.Forms.GroupBox();
             this.Listbox_MachineCode = new System.Windows.Forms.ListBox();
             this.btn_EveyStep = new System.Windows.Forms.Button();
+            this.GB_Time = new System.Windows.Forms.GroupBox();
+            this.btn_OpenCLA = new System.Windows.Forms.Button();
             this.GBRegister.SuspendLayout();
             this.GBRigesterOther.SuspendLayout();
             this.GBAssembly.SuspendLayout();
@@ -618,7 +620,7 @@
             // 
             // btn_Reset
             // 
-            this.btn_Reset.Location = new System.Drawing.Point(1348, 758);
+            this.btn_Reset.Location = new System.Drawing.Point(1322, 758);
             this.btn_Reset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Reset.Name = "btn_Reset";
             this.btn_Reset.Size = new System.Drawing.Size(115, 34);
@@ -629,7 +631,7 @@
             // 
             // btn_InputFile
             // 
-            this.btn_InputFile.Location = new System.Drawing.Point(1208, 758);
+            this.btn_InputFile.Location = new System.Drawing.Point(1186, 758);
             this.btn_InputFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_InputFile.Name = "btn_InputFile";
             this.btn_InputFile.Size = new System.Drawing.Size(115, 34);
@@ -641,9 +643,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(928, 124);
+            this.pictureBox1.Location = new System.Drawing.Point(938, 116);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(668, 617);
+            this.pictureBox1.Size = new System.Drawing.Size(658, 625);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
@@ -690,7 +692,7 @@
             // 
             // btn_Start
             // 
-            this.btn_Start.Location = new System.Drawing.Point(928, 758);
+            this.btn_Start.Location = new System.Drawing.Point(914, 758);
             this.btn_Start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Start.Name = "btn_Start";
             this.btn_Start.Size = new System.Drawing.Size(115, 34);
@@ -756,19 +758,42 @@
             // 
             // btn_EveyStep
             // 
-            this.btn_EveyStep.Location = new System.Drawing.Point(1068, 758);
+            this.btn_EveyStep.Location = new System.Drawing.Point(1050, 758);
             this.btn_EveyStep.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_EveyStep.Name = "btn_EveyStep";
             this.btn_EveyStep.Size = new System.Drawing.Size(115, 34);
             this.btn_EveyStep.TabIndex = 26;
             this.btn_EveyStep.Text = "单步执行";
             this.btn_EveyStep.UseVisualStyleBackColor = true;
+            this.btn_EveyStep.Click += new System.EventHandler(this.btn_EveyStep_Click);
+            // 
+            // GB_Time
+            // 
+            this.GB_Time.Location = new System.Drawing.Point(919, 2);
+            this.GB_Time.Name = "GB_Time";
+            this.GB_Time.Size = new System.Drawing.Size(689, 97);
+            this.GB_Time.TabIndex = 27;
+            this.GB_Time.TabStop = false;
+            this.GB_Time.Text = "指令周期";
+            // 
+            // btn_OpenCLA
+            // 
+            this.btn_OpenCLA.Location = new System.Drawing.Point(1458, 758);
+            this.btn_OpenCLA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_OpenCLA.Name = "btn_OpenCLA";
+            this.btn_OpenCLA.Size = new System.Drawing.Size(151, 34);
+            this.btn_OpenCLA.TabIndex = 28;
+            this.btn_OpenCLA.Text = "打开超前进位加法器";
+            this.btn_OpenCLA.UseVisualStyleBackColor = true;
+            this.btn_OpenCLA.Click += new System.EventHandler(this.btn_OpenCLA_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1632, 803);
+            this.Controls.Add(this.btn_OpenCLA);
+            this.Controls.Add(this.GB_Time);
             this.Controls.Add(this.btn_EveyStep);
             this.Controls.Add(this.GB_MC);
             this.Controls.Add(this.GB_OMU);
@@ -864,6 +889,8 @@
         private System.Windows.Forms.Button btn_EveyStep;
         private System.Windows.Forms.ColumnHeader columnHeader_Address;
         private System.Windows.Forms.ColumnHeader columnHeader_Info;
+        private System.Windows.Forms.GroupBox GB_Time;
+        private System.Windows.Forms.Button btn_OpenCLA;
     }
 }
 

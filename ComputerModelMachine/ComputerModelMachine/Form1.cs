@@ -30,6 +30,8 @@ namespace ComputerModelMachine
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            btn_Start.Enabled = false;
+            btn_EveyStep.Enabled = false;
             //绘制 Listview_DataMemory.Columns
             Listview_DataMemory.Columns.Add("DAD", 45, HorizontalAlignment.Left);
             Listview_DataMemory.Columns.Add("DValue", 72, HorizontalAlignment.Left);
@@ -39,6 +41,9 @@ namespace ComputerModelMachine
         //初始化  (置零)
         private void btn_Reset_Click(object sender, EventArgs e)
         {
+            //关闭执行button
+            btn_Start.Enabled = false;
+            btn_EveyStep.Enabled = false;
             TextBox[] textBox_R = new TextBox[] { Textbox_R0, Textbox_R1, Textbox_R2, Textbox_R3, Textbox_R4, Textbox_R5, Textbox_R6, Textbox_R7 };
             for (int i = 0; i < textBox_R.Length; i++)
                 ToTextbox(textBox_R[i], R[i], 0);
@@ -67,6 +72,10 @@ namespace ComputerModelMachine
         private void btn_InputFile_Click(object sender, EventArgs e)
         {
             btn_Reset_Click(sender, e);
+            //启用执行button
+            btn_EveyStep.Enabled = true;
+            btn_Start.Enabled = true;
+
             string filePath = @"C:\Users\longyuan\Documents\Tencent Files\1144916545\FileRecv\test.data";   //测试使用代码
             /*
              * 因测试被注释掉 
@@ -94,7 +103,20 @@ namespace ComputerModelMachine
                 fileReader.Close();
             //}     //因测试被注释掉
         }
+        private void btn_Start_Click(object sender, EventArgs e)
+        {
+            InstructCount = 0x1000;
+            ToTextbox(Textbox_PC, PC, InstructCount);
+            ChangeDM(5, 0x1A);
+        }
+        private void btn_OpenCLA_Click(object sender, EventArgs e)
+        {
 
+        }
+        private void btn_EveyStep_Click(object sender, EventArgs e)
+        {
+
+        }
         /**
           * 修改一般Textbox寄存器
           * @param textbox 寄存器对应显示控件
@@ -149,13 +171,6 @@ namespace ComputerModelMachine
         {
 
         }
-
-        private void btn_Start_Click(object sender, EventArgs e)
-        {
-            InstructCount = 0x1000;
-            ToTextbox(Textbox_PC, PC, InstructCount);
-            ChangeDM(5, 0x1A);
-        }
         /**
           * 汇编指令转机器码
           */
@@ -208,8 +223,8 @@ namespace ComputerModelMachine
             return code;
         }
         /**
-         * 寻址方式---判断 + 操作数获取 
-         */
+          * 寻址方式---判断 + 操作数获取 
+          */
         private string AddressingMode(string str)
         {
             string x = "";
@@ -304,7 +319,25 @@ namespace ComputerModelMachine
         }
         private void OP(string MachineCode)
         {
-
+            //TORIX 实现OP解析 未实现具体功能
+            string[] Parse = new string[5];
+            Parse[0] = MachineCode.Substring(0, 4);
+            if(Parse[0] == "0000")
+            {
+                ;
+            }
+            else if(Parse[0] == "1110" || Parse[0] == "1001")
+            {
+                Parse[1] = MachineCode.Substring(4, 8);
+                Parse[2] = MachineCode.Substring(13, 3);
+            }
+            else
+            {
+                Parse[1] = MachineCode.Substring(4, 3);
+                Parse[2] = MachineCode.Substring(7, 3);
+                Parse[3] = MachineCode.Substring(11, 3);
+                Parse[4] = MachineCode.Substring(14, 3);
+            }
         }
         /**
          * 修改Listview_DataMemory 中某项
