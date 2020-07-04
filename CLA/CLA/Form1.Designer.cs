@@ -243,7 +243,7 @@
             this.Num2dec.TabIndex = 2;
             this.Num2dec.Text = "0";
             this.Num2dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Num2dec.TextChanged += new System.EventHandler(this.Num2_Leave);
+            this.Num2dec.Leave += new System.EventHandler(this.Num2_Leave);
             // 
             // Num1dec
             // 
@@ -253,7 +253,7 @@
             this.Num1dec.TabIndex = 1;
             this.Num1dec.Text = "0";
             this.Num1dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Num1dec.TextChanged += new System.EventHandler(this.Num1_Leave);
+            this.Num1dec.Leave += new System.EventHandler(this.Num1_Leave);
             // 
             // label2
             // 
