@@ -68,10 +68,6 @@
             this.Label_PC = new System.Windows.Forms.Label();
             this.GBAssembly = new System.Windows.Forms.GroupBox();
             this.Listbox_Code = new System.Windows.Forms.ListBox();
-            this.GB_CMU = new System.Windows.Forms.GroupBox();
-            this.Listview_ControlMemory = new System.Windows.Forms.ListView();
-            this.columnHeader_Address = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader_Info = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Reset = new System.Windows.Forms.Button();
             this.btn_InputFile = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -89,15 +85,19 @@
             this.btn_EveyStep = new System.Windows.Forms.Button();
             this.GB_Time = new System.Windows.Forms.GroupBox();
             this.btn_OpenCLA = new System.Windows.Forms.Button();
+            this.Listbox_Time = new System.Windows.Forms.ListBox();
+            this.GB_PrivateInfo = new System.Windows.Forms.GroupBox();
+            this.RTB_PriInfo = new System.Windows.Forms.RichTextBox();
             this.GBRegister.SuspendLayout();
             this.GBRigesterOther.SuspendLayout();
             this.GBAssembly.SuspendLayout();
-            this.GB_CMU.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.GB_DMU.SuspendLayout();
             this.GB_MicroOrder.SuspendLayout();
             this.GB_OMU.SuspendLayout();
             this.GB_MC.SuspendLayout();
+            this.GB_Time.SuspendLayout();
+            this.GB_PrivateInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // GBRegister
@@ -581,60 +581,23 @@
             this.Listbox_Code.Size = new System.Drawing.Size(205, 334);
             this.Listbox_Code.TabIndex = 0;
             // 
-            // GB_CMU
-            // 
-            this.GB_CMU.Controls.Add(this.Listview_ControlMemory);
-            this.GB_CMU.Location = new System.Drawing.Point(3, 369);
-            this.GB_CMU.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GB_CMU.Name = "GB_CMU";
-            this.GB_CMU.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.GB_CMU.Size = new System.Drawing.Size(429, 431);
-            this.GB_CMU.TabIndex = 19;
-            this.GB_CMU.TabStop = false;
-            this.GB_CMU.Text = "控制存储单元";
-            // 
-            // Listview_ControlMemory
-            // 
-            this.Listview_ControlMemory.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader_Address,
-            this.columnHeader_Info});
-            this.Listview_ControlMemory.FullRowSelect = true;
-            this.Listview_ControlMemory.GridLines = true;
-            this.Listview_ControlMemory.HideSelection = false;
-            this.Listview_ControlMemory.Location = new System.Drawing.Point(8, 18);
-            this.Listview_ControlMemory.Name = "Listview_ControlMemory";
-            this.Listview_ControlMemory.Size = new System.Drawing.Size(410, 406);
-            this.Listview_ControlMemory.TabIndex = 0;
-            this.Listview_ControlMemory.UseCompatibleStateImageBehavior = false;
-            this.Listview_ControlMemory.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader_Address
-            // 
-            this.columnHeader_Address.Text = "CMA";
-            this.columnHeader_Address.Width = 45;
-            // 
-            // columnHeader_Info
-            // 
-            this.columnHeader_Info.Text = "Data";
-            this.columnHeader_Info.Width = 364;
-            // 
             // btn_Reset
             // 
-            this.btn_Reset.Location = new System.Drawing.Point(1322, 758);
+            this.btn_Reset.Location = new System.Drawing.Point(1279, 758);
             this.btn_Reset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Reset.Name = "btn_Reset";
-            this.btn_Reset.Size = new System.Drawing.Size(115, 34);
+            this.btn_Reset.Size = new System.Drawing.Size(99, 34);
             this.btn_Reset.TabIndex = 20;
-            this.btn_Reset.Text = "初始化(重置)";
+            this.btn_Reset.Text = "清零";
             this.btn_Reset.UseVisualStyleBackColor = true;
             this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
             // 
             // btn_InputFile
             // 
-            this.btn_InputFile.Location = new System.Drawing.Point(1186, 758);
+            this.btn_InputFile.Location = new System.Drawing.Point(1153, 758);
             this.btn_InputFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_InputFile.Name = "btn_InputFile";
-            this.btn_InputFile.Size = new System.Drawing.Size(115, 34);
+            this.btn_InputFile.Size = new System.Drawing.Size(99, 34);
             this.btn_InputFile.TabIndex = 21;
             this.btn_InputFile.Text = "导入文件";
             this.btn_InputFile.UseVisualStyleBackColor = true;
@@ -643,9 +606,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(938, 116);
+            this.pictureBox1.Location = new System.Drawing.Point(919, 178);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(658, 625);
+            this.pictureBox1.Size = new System.Drawing.Size(580, 562);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
@@ -674,9 +637,9 @@
             // GB_MicroOrder
             // 
             this.GB_MicroOrder.Controls.Add(this.Listbox_MicroOrder);
-            this.GB_MicroOrder.Location = new System.Drawing.Point(644, 2);
+            this.GB_MicroOrder.Location = new System.Drawing.Point(3, 369);
             this.GB_MicroOrder.Name = "GB_MicroOrder";
-            this.GB_MicroOrder.Size = new System.Drawing.Size(247, 363);
+            this.GB_MicroOrder.Size = new System.Drawing.Size(429, 431);
             this.GB_MicroOrder.TabIndex = 24;
             this.GB_MicroOrder.TabStop = false;
             this.GB_MicroOrder.Text = "微指令序列记录";
@@ -687,15 +650,15 @@
             this.Listbox_MicroOrder.ItemHeight = 15;
             this.Listbox_MicroOrder.Location = new System.Drawing.Point(7, 20);
             this.Listbox_MicroOrder.Name = "Listbox_MicroOrder";
-            this.Listbox_MicroOrder.Size = new System.Drawing.Size(234, 334);
+            this.Listbox_MicroOrder.Size = new System.Drawing.Size(415, 394);
             this.Listbox_MicroOrder.TabIndex = 0;
             // 
             // btn_Start
             // 
-            this.btn_Start.Location = new System.Drawing.Point(914, 758);
+            this.btn_Start.Location = new System.Drawing.Point(910, 758);
             this.btn_Start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_Start.Name = "btn_Start";
-            this.btn_Start.Size = new System.Drawing.Size(115, 34);
+            this.btn_Start.Size = new System.Drawing.Size(99, 34);
             this.btn_Start.TabIndex = 25;
             this.btn_Start.Text = "开始执行";
             this.btn_Start.UseVisualStyleBackColor = true;
@@ -758,10 +721,10 @@
             // 
             // btn_EveyStep
             // 
-            this.btn_EveyStep.Location = new System.Drawing.Point(1050, 758);
+            this.btn_EveyStep.Location = new System.Drawing.Point(1027, 758);
             this.btn_EveyStep.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_EveyStep.Name = "btn_EveyStep";
-            this.btn_EveyStep.Size = new System.Drawing.Size(115, 34);
+            this.btn_EveyStep.Size = new System.Drawing.Size(99, 34);
             this.btn_EveyStep.TabIndex = 26;
             this.btn_EveyStep.Text = "单步执行";
             this.btn_EveyStep.UseVisualStyleBackColor = true;
@@ -769,29 +732,66 @@
             // 
             // GB_Time
             // 
+            this.GB_Time.Controls.Add(this.Listbox_Time);
             this.GB_Time.Location = new System.Drawing.Point(919, 2);
             this.GB_Time.Name = "GB_Time";
-            this.GB_Time.Size = new System.Drawing.Size(689, 97);
+            this.GB_Time.Size = new System.Drawing.Size(223, 170);
             this.GB_Time.TabIndex = 27;
             this.GB_Time.TabStop = false;
             this.GB_Time.Text = "指令周期";
             // 
             // btn_OpenCLA
             // 
-            this.btn_OpenCLA.Location = new System.Drawing.Point(1458, 758);
+            this.btn_OpenCLA.Location = new System.Drawing.Point(1392, 759);
             this.btn_OpenCLA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_OpenCLA.Name = "btn_OpenCLA";
-            this.btn_OpenCLA.Size = new System.Drawing.Size(151, 34);
+            this.btn_OpenCLA.Size = new System.Drawing.Size(135, 34);
             this.btn_OpenCLA.TabIndex = 28;
-            this.btn_OpenCLA.Text = "打开超前进位加法器";
+            this.btn_OpenCLA.Text = "超前进位加法器";
             this.btn_OpenCLA.UseVisualStyleBackColor = true;
             this.btn_OpenCLA.Click += new System.EventHandler(this.btn_OpenCLA_Click);
+            // 
+            // Listbox_Time
+            // 
+            this.Listbox_Time.Font = new System.Drawing.Font("宋体", 15F);
+            this.Listbox_Time.FormattingEnabled = true;
+            this.Listbox_Time.ItemHeight = 25;
+            this.Listbox_Time.Items.AddRange(new object[] {
+            "FT",
+            "ST",
+            "DT",
+            "ET"});
+            this.Listbox_Time.Location = new System.Drawing.Point(14, 22);
+            this.Listbox_Time.Name = "Listbox_Time";
+            this.Listbox_Time.Size = new System.Drawing.Size(196, 129);
+            this.Listbox_Time.TabIndex = 0;
+            // 
+            // GB_PrivateInfo
+            // 
+            this.GB_PrivateInfo.Controls.Add(this.RTB_PriInfo);
+            this.GB_PrivateInfo.Location = new System.Drawing.Point(1186, 2);
+            this.GB_PrivateInfo.Name = "GB_PrivateInfo";
+            this.GB_PrivateInfo.Size = new System.Drawing.Size(313, 170);
+            this.GB_PrivateInfo.TabIndex = 29;
+            this.GB_PrivateInfo.TabStop = false;
+            this.GB_PrivateInfo.Text = "作者信息";
+            // 
+            // RTB_PriInfo
+            // 
+            this.RTB_PriInfo.BackColor = System.Drawing.SystemColors.Control;
+            this.RTB_PriInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RTB_PriInfo.Location = new System.Drawing.Point(7, 20);
+            this.RTB_PriInfo.Name = "RTB_PriInfo";
+            this.RTB_PriInfo.Size = new System.Drawing.Size(297, 144);
+            this.RTB_PriInfo.TabIndex = 0;
+            this.RTB_PriInfo.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1632, 803);
+            this.Controls.Add(this.GB_PrivateInfo);
             this.Controls.Add(this.btn_OpenCLA);
             this.Controls.Add(this.GB_Time);
             this.Controls.Add(this.btn_EveyStep);
@@ -803,7 +803,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btn_InputFile);
             this.Controls.Add(this.btn_Reset);
-            this.Controls.Add(this.GB_CMU);
             this.Controls.Add(this.GBAssembly);
             this.Controls.Add(this.GBRigesterOther);
             this.Controls.Add(this.GBRegister);
@@ -819,12 +818,13 @@
             this.GBRigesterOther.ResumeLayout(false);
             this.GBRigesterOther.PerformLayout();
             this.GBAssembly.ResumeLayout(false);
-            this.GB_CMU.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.GB_DMU.ResumeLayout(false);
             this.GB_MicroOrder.ResumeLayout(false);
             this.GB_OMU.ResumeLayout(false);
             this.GB_MC.ResumeLayout(false);
+            this.GB_Time.ResumeLayout(false);
+            this.GB_PrivateInfo.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -870,11 +870,9 @@
         private System.Windows.Forms.TextBox Textbox_PSW;
         private System.Windows.Forms.GroupBox GBAssembly;
         private System.Windows.Forms.ListBox Listbox_Code;
-        private System.Windows.Forms.GroupBox GB_CMU;
         private System.Windows.Forms.Button btn_Reset;
         private System.Windows.Forms.Button btn_InputFile;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ListView Listview_ControlMemory;
         private System.Windows.Forms.GroupBox GB_DMU;
         private System.Windows.Forms.ListView Listview_DataMemory;
         private System.Windows.Forms.GroupBox GB_MicroOrder;
@@ -887,10 +885,11 @@
         private System.Windows.Forms.GroupBox GB_MC;
         private System.Windows.Forms.ListBox Listbox_MachineCode;
         private System.Windows.Forms.Button btn_EveyStep;
-        private System.Windows.Forms.ColumnHeader columnHeader_Address;
-        private System.Windows.Forms.ColumnHeader columnHeader_Info;
         private System.Windows.Forms.GroupBox GB_Time;
         private System.Windows.Forms.Button btn_OpenCLA;
+        private System.Windows.Forms.ListBox Listbox_Time;
+        private System.Windows.Forms.GroupBox GB_PrivateInfo;
+        private System.Windows.Forms.RichTextBox RTB_PriInfo;
     }
 }
 
