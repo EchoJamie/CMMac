@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.Input = new System.Windows.Forms.GroupBox();
+            this.AnswerBin = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.AnswerDec = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.Num2bin = new System.Windows.Forms.TextBox();
             this.Num1bin = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -121,11 +125,6 @@
             this.c6l = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.test = new System.Windows.Forms.Button();
-            this.AnswerBin = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.AnswerDec = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.Input.SuspendLayout();
             this.InputData.SuspendLayout();
@@ -152,6 +151,47 @@
             this.Input.TabIndex = 0;
             this.Input.TabStop = false;
             this.Input.Text = "input";
+            // 
+            // AnswerBin
+            // 
+            this.AnswerBin.Location = new System.Drawing.Point(119, 161);
+            this.AnswerBin.Name = "AnswerBin";
+            this.AnswerBin.ReadOnly = true;
+            this.AnswerBin.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.AnswerBin.Size = new System.Drawing.Size(70, 25);
+            this.AnswerBin.TabIndex = 10;
+            this.AnswerBin.TabStop = false;
+            this.AnswerBin.Text = "00000000";
+            this.AnswerBin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 166);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(108, 15);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "结  果：(bin)";
+            // 
+            // AnswerDec
+            // 
+            this.AnswerDec.Location = new System.Drawing.Point(119, 133);
+            this.AnswerDec.Name = "AnswerDec";
+            this.AnswerDec.ReadOnly = true;
+            this.AnswerDec.Size = new System.Drawing.Size(70, 25);
+            this.AnswerDec.TabIndex = 8;
+            this.AnswerDec.TabStop = false;
+            this.AnswerDec.Text = "0";
+            this.AnswerDec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 138);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "结  果：(dec)";
             // 
             // Num2bin
             // 
@@ -203,7 +243,7 @@
             this.Num2dec.TabIndex = 2;
             this.Num2dec.Text = "0";
             this.Num2dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Num2dec.Leave += new System.EventHandler(this.Num2_Leave);
+            this.Num2dec.TextChanged += new System.EventHandler(this.Num2_Leave);
             // 
             // Num1dec
             // 
@@ -213,7 +253,7 @@
             this.Num1dec.TabIndex = 1;
             this.Num1dec.Text = "0";
             this.Num1dec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Num1dec.Leave += new System.EventHandler(this.Num1_Leave);
+            this.Num1dec.TextChanged += new System.EventHandler(this.Num1_Leave);
             // 
             // label2
             // 
@@ -1155,67 +1195,14 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // test
-            // 
-            this.test.Location = new System.Drawing.Point(231, 416);
-            this.test.Name = "test";
-            this.test.Size = new System.Drawing.Size(75, 23);
-            this.test.TabIndex = 37;
-            this.test.Text = "test";
-            this.test.UseVisualStyleBackColor = true;
-            this.test.Visible = false;
-            this.test.Click += new System.EventHandler(this.test_Click);
-            // 
-            // AnswerBin
-            // 
-            this.AnswerBin.Location = new System.Drawing.Point(119, 161);
-            this.AnswerBin.Name = "AnswerBin";
-            this.AnswerBin.ReadOnly = true;
-            this.AnswerBin.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.AnswerBin.Size = new System.Drawing.Size(70, 25);
-            this.AnswerBin.TabIndex = 10;
-            this.AnswerBin.TabStop = false;
-            this.AnswerBin.Text = "00000000";
-            this.AnswerBin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 166);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(108, 15);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "结  果：(bin)";
-            // 
-            // AnswerDec
-            // 
-            this.AnswerDec.Location = new System.Drawing.Point(119, 133);
-            this.AnswerDec.Name = "AnswerDec";
-            this.AnswerDec.ReadOnly = true;
-            this.AnswerDec.Size = new System.Drawing.Size(70, 25);
-            this.AnswerDec.TabIndex = 8;
-            this.AnswerDec.TabStop = false;
-            this.AnswerDec.Text = "0";
-            this.AnswerDec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 138);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(108, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "结  果：(dec)";
-            // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(6, 206);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(514, 177);
             this.richTextBox1.TabIndex = 38;
-            this.richTextBox1.Text = "被 加 数a          加    数b          进    位c\n本地进位d          传送条件t\n十进制dec          二进制" +
-    "bin";
-            this.richTextBox1.Visible = false;
+            this.richTextBox1.Text = "被 加 数a            加    数b          \n本地进位D = a·b\n传送条件T = a + b\n进    位Cn = Dn + Tn·" +
+    "Cn-1\n十 进 制dec          二 进 制bin";
             // 
             // Form1
             // 
@@ -1223,7 +1210,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(942, 493);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.test);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
@@ -1232,6 +1218,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Carry Lookahead Adder";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.Input.ResumeLayout(false);
             this.Input.PerformLayout();
             this.InputData.ResumeLayout(false);
@@ -1337,7 +1324,6 @@
         private System.Windows.Forms.Label t5l;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button test;
         private System.Windows.Forms.TextBox AnswerBin;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox AnswerDec;

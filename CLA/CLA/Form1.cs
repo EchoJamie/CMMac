@@ -148,16 +148,6 @@ namespace CLA
             AnswerBin.Text = ans;
         }
 
-        private void test_Click(object sender, EventArgs e)
-        {
-            First();
-            Thread.Sleep(3000);
-            Second();
-            Thread.Sleep(1000);
-            Third();
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             switch(step)
@@ -173,6 +163,11 @@ namespace CLA
             First();
             Second();
             Third();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            MessageBox.Show("本超前进位加法器，为八位加法器\n故如果用户输入的值不在-128~127之间\n将会引发异常造成程序终止");
         }
     }
 }
