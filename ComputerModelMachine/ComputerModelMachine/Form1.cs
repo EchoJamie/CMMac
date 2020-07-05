@@ -83,18 +83,18 @@ namespace ComputerModelMachine
             btn_EveyStep.Enabled = true;
             btn_Start.Enabled = true;
 
-            string filePath = @"C:\Users\longyuan\Documents\Tencent Files\1144916545\FileRecv\test.data";   //测试使用代码
-                                                                                                            /*
-                                                                                                             * 因测试被注释掉 
-                                                                                                            string filePath = "";
-                                                                                                            OpenFileDialog openfile = new OpenFileDialog(); //选择文件窗口
-                                                                                                            openfile.Title = "请选择测试文件"; //弹窗标题
-                                                                                                            openfile.Filter = "(*.data)|*.data|(*.*)|*.*";  //文件筛选器
-                                                                                                            openfile.Multiselect = false;   //是否允许多选
-                                                                                                            openfile.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//初始目录  桌面
-                                                                                                            if(openfile.ShowDialog() == DialogResult.OK)
-                                                                                                            {
-                                                                                                                filePath = openfile.FileName;   //获取文件路径*/
+            //string filePath = @"C:\Users\longyuan\Documents\Tencent Files\1144916545\FileRecv\test.data";   //测试使用代码
+            /*
+                * 因测试被注释掉 */
+            string filePath = "";
+            OpenFileDialog openfile = new OpenFileDialog(); //选择文件窗口
+            openfile.Title = "请选择测试文件"; //弹窗标题
+            openfile.Filter = "(*.data)|*.data|(*.*)|*.*";  //文件筛选器
+            openfile.Multiselect = false;   //是否允许多选
+            openfile.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//初始目录  桌面
+            if(openfile.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openfile.FileName;   //获取文件路径*/
             StreamReader fileReader = new StreamReader(filePath, Encoding.Default); //文件读取流
             string s = "";
             while (s != null)
@@ -108,7 +108,7 @@ namespace ComputerModelMachine
                 }
             }
             fileReader.Close();
-            //}     //因测试被注释掉
+            }     //因测试被注释掉
         }
         private void btn_Start_Click(object sender, EventArgs e)
         {
