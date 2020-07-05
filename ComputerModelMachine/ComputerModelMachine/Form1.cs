@@ -15,7 +15,7 @@ namespace ComputerModelMachine
     {
         byte[] R = new byte[8];
         short PC, IR, MAR, MDR, IMAR, IMDR, SR, DR;
-        byte[] DataMemory = new byte[32];
+        byte[] DataMemory = new byte[64];
         //PSW 含义解释
         //H(半进位标志) S(符号标志位（NV异或值）)
         //V(有符号溢出) C(无符号溢出) 
@@ -23,7 +23,7 @@ namespace ComputerModelMachine
         bool[] PSW = new bool[6];
         string PSW_str = "0 0 0 0 0 0 0 0  ";
         short InstructCount = 0x1000;
-        byte[] count = new byte[] { 0, 0, 0, 0};
+        byte count = 0;
         public Form1()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace ComputerModelMachine
             //绘制 Listview_DataMemory.Columns
             Listview_DataMemory.Columns.Add("DAD", 45, HorizontalAlignment.Left);
             Listview_DataMemory.Columns.Add("DValue", 72, HorizontalAlignment.Left);
-            
+
             //TextBox[] textBox_R = new TextBox[] { Textbox_R0, Textbox_R1, Textbox_R2, Textbox_R3, Textbox_R4, Textbox_R5, Textbox_R6, Textbox_R7};
         }
         //初始化  (置零)
@@ -70,6 +70,10 @@ namespace ComputerModelMachine
             Listbox_MachineCode.Items.Clear();
             Listview_OrderMemory.Items.Clear();
             Listbox_MicroOrder.Items.Clear();
+            Listbox_Time.SelectedIndex = -1;
+            Listbox_Code.SelectedIndex = -1;
+            Listbox_MachineCode.SelectedIndex = -1;
+            count = 0;
         }
         //打开.data文件
         private void btn_InputFile_Click(object sender, EventArgs e)
@@ -80,43 +84,53 @@ namespace ComputerModelMachine
             btn_Start.Enabled = true;
 
             string filePath = @"C:\Users\longyuan\Documents\Tencent Files\1144916545\FileRecv\test.data";   //测试使用代码
-            /*
-             * 因测试被注释掉 
-            string filePath = "";
-            OpenFileDialog openfile = new OpenFileDialog(); //选择文件窗口
-            openfile.Title = "请选择测试文件"; //弹窗标题
-            openfile.Filter = "(*.data)|*.data|(*.*)|*.*";  //文件筛选器
-            openfile.Multiselect = false;   //是否允许多选
-            openfile.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//初始目录  桌面
-            if(openfile.ShowDialog() == DialogResult.OK)
+                                                                                                            /*
+                                                                                                             * 因测试被注释掉 
+                                                                                                            string filePath = "";
+                                                                                                            OpenFileDialog openfile = new OpenFileDialog(); //选择文件窗口
+                                                                                                            openfile.Title = "请选择测试文件"; //弹窗标题
+                                                                                                            openfile.Filter = "(*.data)|*.data|(*.*)|*.*";  //文件筛选器
+                                                                                                            openfile.Multiselect = false;   //是否允许多选
+                                                                                                            openfile.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//初始目录  桌面
+                                                                                                            if(openfile.ShowDialog() == DialogResult.OK)
+                                                                                                            {
+                                                                                                                filePath = openfile.FileName;   //获取文件路径*/
+            StreamReader fileReader = new StreamReader(filePath, Encoding.Default); //文件读取流
+            string s = "";
+            while (s != null)
             {
-                filePath = openfile.FileName;   //获取文件路径*/
-                StreamReader fileReader = new StreamReader(filePath, Encoding.Default); //文件读取流
-                string s = "";
-                while(s != null)
+                s = fileReader.ReadLine();
+                if (!string.IsNullOrEmpty(s))
                 {
-                    s = fileReader.ReadLine();
-                    if(!string.IsNullOrEmpty(s))
-                    {
-                        Listbox_Code.Items.Add(s);  //导入listbox_code
-                        AddListbox_MC(AssemblyToCode(s));   //同步翻译为机器码至listbox_machinecode
-                        AddListview_IM(s);  //同步至指令存储单元
-                    }
+                    Listbox_Code.Items.Add(s);  //导入listbox_code
+                    AddListbox_MC(AssemblyToCode(s));   //同步翻译为机器码至listbox_machinecode
+                    AddListview_IM(s);  //同步至指令存储单元
                 }
-                fileReader.Close();
+            }
+            fileReader.Close();
             //}     //因测试被注释掉
         }
         private void btn_Start_Click(object sender, EventArgs e)
         {
-            InstructCount = 0x1000;
-            PC = ToTextbox(Textbox_PC, InstructCount);
-            /*for(byte i = 0;i < 3;i++)
-                FT(i);
-            for (byte i = 0;i < 3;i++)
-                ST(i);
-            for (byte i = 0;i < 3;i++)
-                DT(i);*/
-            //ChangeDM(5, 0x1A);
+            if (Listbox_MachineCode.SelectedIndex != Listbox_MachineCode.Items.Count - 1)
+            {
+                if (PC == 0)
+                {
+                    InstructCount = 0x1000;
+                    PC = ToTextbox(Textbox_PC, InstructCount);
+                    Listbox_Code.SelectedIndex = -1;
+                    Listbox_MachineCode.SelectedIndex = -1;
+                }
+                for (int i = 0; i < Listview_OrderMemory.Items.Count; i++)
+                {
+                    FT();
+                    Listbox_Code.SelectedIndex++;
+                    Listbox_MachineCode.SelectedIndex++;
+                    ST();
+                    DT();
+                    ET();
+                }
+            }
         }
         private void btn_OpenCLA_Click(object sender, EventArgs e)
         {
@@ -124,15 +138,25 @@ namespace ComputerModelMachine
         }
         private void btn_EveyStep_Click(object sender, EventArgs e)
         {
-            if (PC == 0)
-            { 
-                InstructCount = 0x1000;
-                PC = ToTextbox(Textbox_PC, InstructCount);
+            if (Listbox_MachineCode.SelectedIndex != Listbox_MachineCode.Items.Count - 1)
+            {
+                if (PC == 0)
+                {
+                    InstructCount = 0x1000;
+                    PC = ToTextbox(Textbox_PC, InstructCount);
+                }
+                switch (count % 4)
+                {
+                    case 0: FT();
+                        count++;
+                        Listbox_Code.SelectedIndex++;
+                        Listbox_MachineCode.SelectedIndex++;
+                        break;
+                    case 1: ST(); count++; break;
+                    case 2: DT(); count++; break;
+                    case 3: ET(); count++; break;
+                }
             }
-            /*FT(count[0]++);
-            if (count[0] > 3)
-                count[0] = 0;*/
-
         }
         /**
           * 修改一般Textbox寄存器
@@ -372,233 +396,182 @@ namespace ComputerModelMachine
                 R[Address] = (byte)ToTextbox(textBox_R[Address], num);
             }
         }
-        private void FT(byte i)
+        private void FT()
         {
-            switch(i)
+            Listbox_Time.SelectedItem = "FT";
+            Listbox_MicroOrder.Items.Add("PC -> IBUS, IBUS -> IMAR, 1 -> IREAD, IMAR -> IM");
+            IMAR = ToTextbox(Textbox_IMAR, PC);
+            Listbox_MicroOrder.Items.Add("IM -> IMDR, PC + 1 -> PC");
+            IMDR = ToTextbox(Textbox_IMDR, Convert.ToInt16(Listview_OrderMemory.Items[IMAR - 0x1000].SubItems[1].Text, 2));
+            PC = ToTextbox(Textbox_PC, ++PC);
+            Listbox_MicroOrder.Items.Add("IMDR -> IBUS, IBUS -> IR");
+            IR = ToTextbox(Textbox_IR, IMDR);
+            Listbox_MicroOrder.SelectedIndex = Listbox_MicroOrder.Items.Count - 1;
+        }
+        private void ST()
+        {
+            string[] MacCode = OP(Convert.ToString(IR, 2).PadLeft(16, '0'));
+            Listbox_Time.SelectedItem = "ST";
+            //                 LDI                     LD    
+            if (MacCode[0] == "1110" || MacCode[0] == "1001")
             {
-                case 0:
-                    Listbox_Time.SelectedItem = "FT";
-                    Listbox_MicroOrder.Items.Add("PC -> IBUS, IBUS -> IMAR, 1 -> IREAD, IMAR -> IM");
-                    IMAR = ToTextbox(Textbox_IMAR, PC);
-                    break;
-                case 1:
-                    Listbox_MicroOrder.Items.Add("IM -> IMDR, PC + 1 -> PC");
-                    IMDR = ToTextbox(Textbox_IMDR, Convert.ToInt16(Listview_OrderMemory.Items[IMAR - 0x1000].SubItems[1].Text, 2));
-                    PC = ToTextbox(Textbox_PC, ++PC);
-                    break;
-                case 2:
-                    Listbox_MicroOrder.Items.Add("IMDR -> IBUS, IBUS -> IR");
-                    IR = ToTextbox(Textbox_IR, IMDR);
-                    break;
-                default: break;
+                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> SR");
+                SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[3], 2));
+            }
+            else if (MacCode[0] == "0000")
+            {
+                ;
+            }
+            //                      JMP                     JC
+            else if (MacCode[0] == "0111" || MacCode[0] == "1000")
+            {
+                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> SR");
+                SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
+            }
+            else
+            {
+                switch (MacCode[3])
+                {
+                    case "000":
+                        Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> SR");
+                        SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
+                        break;
+                    case "001":
+                        Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> SR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        SR = ToTextbox(Textbox_SR, MDR);
+                        break;
+                    case "010":
+                        Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rs ->ALU, ADD");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
+                        Listbox_MicroOrder.Items.Add("ALU -> LT, LT -> BUS, BUS -> Rs");
+                        ChangeDM(Convert.ToByte(MacCode[4], 2), (byte)(Convert.ToByte(Listview_DataMemory.Items[Convert.ToInt32(MacCode[4], 2)].SubItems[1].Text, 16) + 1));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> SR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 2));
+                        SR = ToTextbox(Textbox_SR, MDR);
+                        break;
+                    case "011":
+                        Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rs ->ALU, ADD");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
+                        Listbox_MicroOrder.Items.Add("ALU -> LT, LT -> BUS, BUS -> Rs");
+                        ChangeDM(Convert.ToByte(MacCode[4], 2), Convert.ToByte(Convert.ToByte(Listview_DataMemory.Items[Convert.ToInt32(MacCode[4], 2)].SubItems[1].Text, 16) + 1));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> MAR, 1 -> READ, MAR -> DM");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        MAR = ToTextbox(Textbox_MAR, MDR);
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> SR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        SR = ToTextbox(Textbox_SR, MDR);
+                        break;
+                    case "100":
+
+                        break;
+                }
             }
             Listbox_MicroOrder.SelectedIndex = Listbox_MicroOrder.Items.Count - 1;
         }
-        private void ST(byte i)
+        private void DT()
         {
             string[] MacCode = OP(Convert.ToString(IR, 2).PadLeft(16, '0'));
-            switch (i)
+            Listbox_Time.SelectedItem = "DT";
+            //                 LDI                     LD    
+            if (MacCode[0] == "1110")
             {
-                case 0:
-                    Listbox_Time.SelectedItem = "ST";
-                    //                 LDI                     LD    
-                    if (MacCode[0] == "1110" || MacCode[0] == "1001")
-                    {
-                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                        SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[3], 2));
-                    }
-                    else if (MacCode[0] == "0000")
-                    {
-                        ;
-                    }
-                    //                      JMP                     JC
-                    else if (MacCode[0] == "0111" || MacCode[0] == "1000")
-                    {
-                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                        SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
-                    }
-                    else
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> SR");
-                                break;
-                            case "001":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rs ->ALU, ADD");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "011":
-                                //Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
-                                //MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
-                    /*
-                //                 INC                     DEC                     NEC
-                if (MacCode[0] == "0100" || MacCode[0] == "0101" || MacCode[0] == "0110")
+                Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> DR");
+                DR = ToTextbox(Textbox_DR, Convert.ToByte(MacCode[1], 2));
+            }
+            else if (MacCode[0] == "1001")
+            {
+                Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> MAR, MAR -> DM");
+                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[1], 2));
+                Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> DR");
+                MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                DR = ToTextbox(Textbox_DR, Convert.ToByte(MacCode[1], 2));
+            }
+            else if (MacCode[0] == "0000" || MacCode[0] == "0111" || MacCode[0] == "1000" || MacCode[0] == "0100" || MacCode[0] == "0101" || MacCode[0] == "0110")
+            {
+                ;
+            }
+            else
+            {
+                switch (MacCode[1])
                 {
-                    Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                    SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
+                    case "000":
+                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> DR");
+                        DR = ToTextbox(Textbox_DR, Convert.ToByte(MacCode[2], 2));
+                        break;
+                    case "001":
+                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[2], 2));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> DR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        DR = ToTextbox(Textbox_DR, MDR);
+                        break;
+                    case "010":
+                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rd ->ALU, ADD");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[2], 2));
+                        Listbox_MicroOrder.Items.Add("ALU -> LT, LT -> BUS, BUS -> Rd");
+                        ChangeDM(Convert.ToByte(MacCode[2], 2), (byte)(Convert.ToByte(Listview_DataMemory.Items[Convert.ToInt32(MacCode[2], 2)].SubItems[1].Text, 16) + 1));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> DR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        DR = ToTextbox(Textbox_DR, MDR);
+                        break;
+                    case "011":
+                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rd ->ALU, ADD");
+                        MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[2], 2));
+                        Listbox_MicroOrder.Items.Add("ALU -> LT, LT -> BUS, BUS -> Rd");
+                        ChangeDM(Convert.ToByte(MacCode[4], 2), (byte)(Convert.ToByte(Listview_DataMemory.Items[Convert.ToInt32(MacCode[2], 2)].SubItems[1].Text, 16) + 1));
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> MAR, 1 -> READ, MAR -> DM");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        MAR = ToTextbox(Textbox_MAR, MDR);
+                        Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> DR");
+                        MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 16));
+                        DR = ToTextbox(Textbox_DR, MDR);
+                        break;
+                    case "100": break;
                 }
-                else
-                {
-
-                }*/
-                    break;
-                case 1:
-                    //                 LDI                     LD    
-                    if (MacCode[0] != "1110" && MacCode[0] != "1001" && MacCode[0] != "0000" && MacCode[0] != "0111" && MacCode[0] != "1000")
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000": break;
-                            case "001":
-                                Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> SR");
-                                MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 2));
-                                SR = ToTextbox(Textbox_SR, MDR);
-                                break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("ALU -> BUS, BUS -> Rs");
-                                SR = ToTextbox(Textbox_SR, ++SR);
-                                break;
-                            case "011":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
-                    break;
-                case 2:
-                    if (MacCode[0] != "1110" && MacCode[0] != "1001" && MacCode[0] != "0000" && MacCode[0] != "0111" && MacCode[0] != "1000")
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000":
-                            case "001": break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> SR");
-                                SR = ToTextbox(Textbox_SR, ++SR);
-                                break;
-                            case "011":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
-                    break;
             }
             Listbox_MicroOrder.SelectedIndex = Listbox_MicroOrder.Items.Count - 1;
         }
-        private void DT(byte i)
+        private void ET()
         {
             string[] MacCode = OP(Convert.ToString(IR, 2).PadLeft(16, '0'));
-            switch (i)
+            Listbox_Time.SelectedItem = "ET";
+            switch(MacCode[0])
             {
-                case 0:
-                    Listbox_Time.SelectedItem = "DT";
-                    //                 LDI                     LD    
-                    if (MacCode[0] == "1110" || MacCode[0] == "1001")
-                    {
-                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                        SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[3], 2));
-                    }
-                    else if (MacCode[0] == "0000")
-                    {
-                        ;
-                    }
-                    //                      JMP                     JC
-                    else if (MacCode[0] == "0111" || MacCode[0] == "1000")
-                    {
-                        Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                        SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
-                    }
-                    else
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> SR");
-                                break;
-                            case "001":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM, Rs ->ALU, ADD");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "011":
-                                //Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ, MAR -> DM");
-                                //MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
-                    /*
-                //                 INC                     DEC                     NEC
-                if (MacCode[0] == "0100" || MacCode[0] == "0101" || MacCode[0] == "0110")
-                {
-                    Listbox_MicroOrder.Items.Add("Rd -> BUS, BUS -> SR");
-                    SR = ToTextbox(Textbox_SR, Convert.ToByte(MacCode[4], 2));
-                }
-                else
-                {
+                case "0000"://nop
+                    break;
+                case "0001"://add 加法
+                    Listbox_MicroOrder.Items.Add("SR -> BUS, BUS -> ALU, DR -> BUS, BUS -> ALU, ADD");
+                    Listbox_MicroOrder.Items.Add("ALU -> MDR, MDR -> BUS, BUS -> Rd");
+                    MDR = ToTextbox(Textbox_MDR, (short)(SR + DR));
+                     
+                    break;
+                case "0010"://sub 减法
+                    break;
+                case "0011"://and 逻辑乘 
+                    break;
+                case "0100"://inc 加一
+                    break;
+                case "0101"://dec 减一
+                    break;
+                case "0110"://nec 求补
+                    break;
+                case "0111"://jmp 
+                    break;
+                case "1000"://jc
+                    break;
+                case "1001"://ld
 
-                }*/
                     break;
-                case 1:
-                    //                 LDI                     LD    
-                    if (MacCode[0] != "1110" && MacCode[0] != "1001" && MacCode[0] != "0000" && MacCode[0] != "0111" && MacCode[0] != "1000")
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000": break;
-                            case "001":
-                                Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> BUS, BUS -> SR");
-                                MDR = ToTextbox(Textbox_MDR, Convert.ToByte(Listview_DataMemory.Items[MAR].SubItems[1].Text, 2));
-                                SR = ToTextbox(Textbox_SR, MDR);
-                                break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("ALU -> BUS, BUS -> Rs");
-                                SR = ToTextbox(Textbox_SR, ++SR);
-                                break;
-                            case "011":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
+                case "1010"://mov
+                    ChangeDM(SR, (byte)Convert.ToByte(Listview_DataMemory.Items[DR].SubItems[1].Text, 16));
                     break;
-                case 2:
-                    if (MacCode[0] != "1110" && MacCode[0] != "1001" && MacCode[0] != "0000" && MacCode[0] != "0111" && MacCode[0] != "1000")
-                    {
-                        switch (MacCode[3])
-                        {
-                            case "000":
-                            case "001": break;
-                            case "010":
-                                Listbox_MicroOrder.Items.Add("DM -> MDR, MDR -> SR");
-                                SR = ToTextbox(Textbox_SR, ++SR);
-                                break;
-                            case "011":
-                                Listbox_MicroOrder.Items.Add("Rs -> BUS, BUS -> MAR, 1 -> READ");
-                                MAR = ToTextbox(Textbox_MAR, Convert.ToByte(MacCode[4], 2));
-                                break;
-                            case "100": break;
-                        }
-                    }
+                case "1110"://ldi
+                    ChangeDM(SR, (byte)DR);
                     break;
             }
-            Listbox_MicroOrder.SelectedIndex = Listbox_MicroOrder.Items.Count - 1;
         }
     }
 }

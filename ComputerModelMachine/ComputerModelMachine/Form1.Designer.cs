@@ -84,8 +84,8 @@
             this.Listbox_MachineCode = new System.Windows.Forms.ListBox();
             this.btn_EveyStep = new System.Windows.Forms.Button();
             this.GB_Time = new System.Windows.Forms.GroupBox();
-            this.btn_OpenCLA = new System.Windows.Forms.Button();
             this.Listbox_Time = new System.Windows.Forms.ListBox();
+            this.btn_OpenCLA = new System.Windows.Forms.Button();
             this.GB_PrivateInfo = new System.Windows.Forms.GroupBox();
             this.RTB_PriInfo = new System.Windows.Forms.RichTextBox();
             this.GBRegister.SuspendLayout();
@@ -577,7 +577,6 @@
             this.Listbox_Code.Location = new System.Drawing.Point(7, 20);
             this.Listbox_Code.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Listbox_Code.Name = "Listbox_Code";
-            this.Listbox_Code.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.Listbox_Code.Size = new System.Drawing.Size(205, 334);
             this.Listbox_Code.TabIndex = 0;
             // 
@@ -740,17 +739,6 @@
             this.GB_Time.TabStop = false;
             this.GB_Time.Text = "指令周期";
             // 
-            // btn_OpenCLA
-            // 
-            this.btn_OpenCLA.Location = new System.Drawing.Point(1392, 759);
-            this.btn_OpenCLA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_OpenCLA.Name = "btn_OpenCLA";
-            this.btn_OpenCLA.Size = new System.Drawing.Size(135, 34);
-            this.btn_OpenCLA.TabIndex = 28;
-            this.btn_OpenCLA.Text = "超前进位加法器";
-            this.btn_OpenCLA.UseVisualStyleBackColor = true;
-            this.btn_OpenCLA.Click += new System.EventHandler(this.btn_OpenCLA_Click);
-            // 
             // Listbox_Time
             // 
             this.Listbox_Time.Font = new System.Drawing.Font("宋体", 15F);
@@ -765,6 +753,18 @@
             this.Listbox_Time.Name = "Listbox_Time";
             this.Listbox_Time.Size = new System.Drawing.Size(196, 129);
             this.Listbox_Time.TabIndex = 0;
+            // 
+            // btn_OpenCLA
+            // 
+            this.btn_OpenCLA.Location = new System.Drawing.Point(1392, 759);
+            this.btn_OpenCLA.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_OpenCLA.Name = "btn_OpenCLA";
+            this.btn_OpenCLA.Size = new System.Drawing.Size(135, 34);
+            this.btn_OpenCLA.TabIndex = 28;
+            this.btn_OpenCLA.Text = "超前进位加法器";
+            this.btn_OpenCLA.UseVisualStyleBackColor = true;
+            this.btn_OpenCLA.Visible = false;
+            this.btn_OpenCLA.Click += new System.EventHandler(this.btn_OpenCLA_Click);
             // 
             // GB_PrivateInfo
             // 
